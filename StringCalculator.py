@@ -20,3 +20,23 @@ def Add(numbers):
     for i in list:
         sum += int(i)
     return sum
+
+def Tests():
+    print("Running Add() tests")
+    if Add("") != 0:
+        print("Add() failed on empty string, got", Add(""))
+
+    if Add("1") != 1:
+        print("Add() failed on 1 number input, got", Add("1"))
+
+    if Add("-1") != -1:
+        print("Add() failed on -1 number input, got", Add("-1"))
+
+    if Add("5,2,9") != 16:
+        print("Add() failed on '5,2,9' number input, got", Add("5,2,9"))
+
+    if Add("5,-2,9") != 12:
+        print("Add() failed on '5,-2,9' number input, got", Add("5,-2,9"))
+    print("Add() tests complete")
+
+Tests()
