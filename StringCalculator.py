@@ -10,4 +10,13 @@ Pre-conditions:
 Return: A integer that is the initial numbers added together
 """
 def Add(numbers):
-    return 0
+    # If string is empty return 0
+    if numbers == "":
+        return 0
+
+    # Get each number and add them together
+    list = numbers.split(',')
+    sum = 0
+    for i in list:
+        sum += int(i)
+    return sum
