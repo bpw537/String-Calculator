@@ -23,11 +23,20 @@ def Add(numbers):
     # Get each number and add them together
     list = numbers.split(delimiter)
     sum = 0
+    negatives = []
     for i in list:
         # Removes any newlines then add the numbers
-        i = i.strip('\n')
-        sum += int(i)
+        i = int(i.strip('\n'))
+        # Add negatives numbers to own list
+        if i < 0:
+            negatives.append(i)
+        sum += i
+
+    # If any negatives inputted then throw exception
+    if len(negatives) > 0:
+        raise Exception("Negatives not allowed", negatives)
     return sum
+
 
 def Tests():
     print("Running Add() tests")
@@ -38,27 +47,15 @@ def Tests():
     if Add("1") != 1:
         print("Add() failed on 1 number input, got", Add("1"))
 
-    if Add("-1") != -1:
-        print("Add() failed on -1 number input, got", Add("-1"))
-
     if Add("5,2,9") != 16:
         print("Add() failed on '5,2,9' number input, got", Add("5,2,9"))
-
-    if Add("5,-2,9") != 12:
-        print("Add() failed on '5,-2,9' number input, got", Add("5,-2,9"))
 
     # Testing version 2 (handles new lines)
     if Add("\n1") != 1:
         print("Add() failed on 1 number input with new line, got", Add("\n1"))
 
-    if Add("\n-1\n") != -1:
-        print("Add() failed on -1 number input with new lines, got", Add("\n-1\n"))
-
     if Add("5,2\n,\n9") != 16:
         print("Add() failed on '5,2,9' number input, got with new lines", Add("5,2\n,\n9"))
-
-    if Add("5\n,-2,\n9") != 12:
-        print("Add() failed on '5,-2,9' number input with new lines, got", Add("5\n,-2,\n9"))
 
     # Testing version 3 (custom delimiter)
     if Add("//;\n1") != 1:
@@ -73,6 +70,50 @@ def Tests():
     if Add("//$@\n5$@2$@9") != 16:
         print("Add() failed on '5,2,9' number input with custom delimiter longer than 1 character, got", Add("//$@\n5$@2$@9"))
 
+    # Testing version 4 (throw exception on negatives)
+    try:
+        Add("-1")
+    except:
+        pass
+    else:
+        print("Add() failed on -1 number input, got", Add("-1"))
+
+    try:
+        Add("5,-2,-9")
+    except:
+        pass
+    else:
+        print("Add() failed on '5,-2,-9' number input, got", Add("5,-2,-9"))
+
+    try:
+        Add("\n-1\n")
+    except:
+        pass
+    else:
+        print("Add() failed on -1 number input with new lines, got", Add("\n-1\n"))
+
+    try:
+        Add("5\n,-2,\n9")
+    except:
+        pass
+    else:
+        print("Add() failed on '5,-2,9' number input with new lines, got", Add("5\n,-2,\n9"))
+
+    try:
+        Add("//;\n-1")
+    except:
+        pass
+    else:
+        print("Add() failed on -1 number input with custom delimiter, got", Add("//;\n-1"))
+
+    try:
+        Add("//$@\n-5$@-2$@-9")
+    except:
+        pass
+    else:
+        print("Add() failed on '-5,-2,-9' number input with custom delimiter longer than 1 character, got", Add("//$@\n-5$@-2$@-9"))
+
     print("Add() tests complete")
+
 
 Tests()
