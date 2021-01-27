@@ -14,6 +14,7 @@ def Add(numbers):
     if numbers == "":
         return 0
 
+    # Finds any custom delimiters
     delimiter = ","
     if len(numbers) > 4:
         if numbers[0:2] == "//":
@@ -30,7 +31,8 @@ def Add(numbers):
         # Add negatives numbers to own list
         if i < 0:
             negatives.append(i)
-        sum += i
+        if i <= 1000:
+            sum += i
 
     # If any negatives inputted then throw exception
     if len(negatives) > 0:
@@ -112,6 +114,16 @@ def Tests():
         pass
     else:
         print("Add() failed on '-5,-2,-9' number input with custom delimiter longer than 1 character, got", Add("//$@\n-5$@-2$@-9"))
+
+    # Testing version 5 (numbers larger than 1000 ignored)
+    if Add("1000") != 1000:
+        print("Add() failed on 1000 number input, got", Add("1000"))
+
+    if Add("1001") != 0:
+        print("Add() failed on 1001 number input, got", Add("1001"))
+
+    if Add("5,25,2005") != 30:
+        print("Add() failed on '5,25,2005' number input, got", Add("5,25,2005"))
 
     print("Add() tests complete")
 
